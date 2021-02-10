@@ -4,8 +4,7 @@ import useInterval from "../utils/useInterval";
 import BreakControls from './BreakControls';
 import FocusControls from './FocusControls';
 import TimerControls from './TimerControls';
-import TimeDisplay from './TimeDisplay';
-import ProgressDisplay from './ProgressDisplay';
+import Display from "./Display";
 
 
 function Pomodoro() {
@@ -32,7 +31,7 @@ function Pomodoro() {
 
   // Handle focus timer buttons:
   const decreaseFocusTimer = () => {
-    if(focusTimerMins > 5 && !isTimerRunning && initPlay) setFocusTimerMins(minutes => minutes -= 5);
+    if(focusTimerMins >= 1 && !isTimerRunning && initPlay) setFocusTimerMins(minutes => minutes -= 1);
   }
   const increaseFocusTimer = () => {
     if(focusTimerMins < 60 && !isTimerRunning && initPlay) setFocusTimerMins(minutes => minutes += 5);
@@ -128,15 +127,16 @@ function Pomodoro() {
       <div className="row">
         <TimerControls playPause={playPause} classNames={classNames} isTimerRunning={isTimerRunning} stop={stop} />
       </div> 
-      <div style={activeSession ? {display: 'block'} : {display: 'none'}}>
-        {/* TODO: This area should show only when a focus or break session is running or pauses */}
-        <div className="row mb-2">
-        <TimeDisplay onBreak={onBreak} initBreakMins={initBreakMins} initFocusMins={initFocusMins} currentTimerMins={currentTimerMins} currentTimerSecs={currentTimerSecs} isTimerRunning={isTimerRunning} />
-        </div>
-        <div className="row mb-2">
-        <ProgressDisplay progressBar={progressBar} />
-        </div>
-      </div> 
+      <Display 
+        activeSession={activeSession}
+        onBreak={onBreak}
+        initBreakMins={initBreakMins}
+        initFocusMins={initFocusMins}
+        currentTimerMins={currentTimerMins}
+        currentTimerSecs={currentTimerSecs}
+        isTimerRunning={isTimerRunning}
+        progressBar={progressBar}
+      />
     </div>
   );
 }
