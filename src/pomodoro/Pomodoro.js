@@ -13,13 +13,13 @@ function Pomodoro() {
 
   // Timer States:
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-    //  For button handlers:
+    //  Time states for button handlers:
   const [focusTimerMins, setFocusTimerMins] = useState(25);
   const [breakTimerMins, setBreakTimerMins] = useState(5);
-    //  Initial States:
+    //  Initial time states:
   const [initFocusMins, setInitFocusMins] = useState(25);
   const [initBreakMins, setInitBreakMins] = useState(5);
-    //  Current States:
+    //  Current time states:
   const [currentTimerMins, setCurrentTimerMins] = useState(25);
   const [currentTimerSecs, setCurrentTimerSecs] = useState(0);
     //  Timer progress bar state:
@@ -46,7 +46,7 @@ function Pomodoro() {
     if(breakTimerMins < 15 && !isTimerRunning && initPlay) setBreakTimerMins(minutes => minutes += 1);
   }
 
-  // Create a helper function that converts minutes and seconds into a percentage of initial duration:
+  // Create a helper function that converts minutes and seconds elapsed into a percentage:
   function progPercentage(currentMins, currentSecs, initialDuration) {
     return 100 - (((currentMins * 60) + currentSecs) / (initialDuration * 60) *100);
   }
@@ -55,25 +55,26 @@ function Pomodoro() {
     () => {
       // ToDo: Implement what should happen when the timer is running
       setCurrentTimerSecs(second => {
-        //If the timer is zero restart, else subtract 1 second
+        //If timer seconds 0, set to 59, else subtract 1 second
         second === 0 ? second = 59 : second -= 1;
+        //When timer seconds are 59, subtract 1 minute
         if(second === 59) setCurrentTimerMins(minutes => currentTimerMins - 1);
         return second;
       });
-
+      //Handle progress bar
       if (onBreak) {
         setProgressBar(progress => progress = progPercentage(currentTimerMins, currentTimerSecs, initBreakMins))
       } else {
         setProgressBar(progress => progress = progPercentage(currentTimerMins, currentTimerSecs, initFocusMins))
       }
-
+      //Handle expired timer
       if (currentTimerMins === 0 && currentTimerSecs === 1) timerExpired();
       
 
     },
     isTimerRunning ? 1000 : null
   );
-
+  //Handle play, pause, and stop
   function playPause() {
     if (initPlay) {
       setInitFocusMins(minutes => minutes = focusTimerMins);
@@ -97,6 +98,7 @@ function Pomodoro() {
     setInitBreakMins(minutes => minutes = breakTimerMins);
   }
 
+  //Handle expired sessions
   function timerExpired() {
     (!onBreak) ? focusExpired() : breakExpired();
   }
@@ -116,7 +118,7 @@ function Pomodoro() {
     setCurrentTimerSecs(seconds => seconds = 0);
     setCurrentTimerMins(minutes => minutes = initFocusMins);
   }
-
+  
   return (
     <div className="pomodoro">
       <div className="row">

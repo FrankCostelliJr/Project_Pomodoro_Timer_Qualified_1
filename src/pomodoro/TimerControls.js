@@ -2,7 +2,7 @@ import React from 'react'
 
 function TimerControls({playPause, classNames, isTimerRunning, stop}) {
   return (
-    <div className="col"> {/*clip here*/}
+    <div className="col"> 
     <div
       className="btn-group btn-group-lg mb-2"
       role="group"
