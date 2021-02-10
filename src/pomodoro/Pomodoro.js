@@ -31,7 +31,7 @@ function Pomodoro() {
 
   // Handle focus timer buttons:
   const decreaseFocusTimer = () => {
-    if(focusTimerMins >= 1 && !isTimerRunning && initPlay) setFocusTimerMins(minutes => minutes -= 1);
+    if(focusTimerMins > 5 && !isTimerRunning && initPlay) setFocusTimerMins(minutes => minutes -= 5);
   }
   const increaseFocusTimer = () => {
     if(focusTimerMins < 60 && !isTimerRunning && initPlay) setFocusTimerMins(minutes => minutes += 5);
