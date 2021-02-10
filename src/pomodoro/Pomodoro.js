@@ -121,11 +121,22 @@ function Pomodoro() {
   return (
     <div className="pomodoro">
       <div className="row">
-        <FocusControls increaseFocusTimer={increaseFocusTimer} decreaseFocusTimer={decreaseFocusTimer} focusTimerMins={focusTimerMins}/>
-        <BreakControls increaseBreakTimer={increaseBreakTimer} decreaseBreakTimer={decreaseBreakTimer} breakTimerMins={breakTimerMins}/>
+        <FocusControls 
+          increaseFocusTimer={increaseFocusTimer} decreaseFocusTimer={decreaseFocusTimer} 
+          focusTimerMins={focusTimerMins}
+        />
+        <BreakControls 
+          increaseBreakTimer={increaseBreakTimer} decreaseBreakTimer={decreaseBreakTimer} 
+          breakTimerMins={breakTimerMins}
+        />
       </div>
       <div className="row">
-        <TimerControls playPause={playPause} classNames={classNames} isTimerRunning={isTimerRunning} stop={stop} />
+        <TimerControls 
+          playPause={playPause}
+          classNames={classNames} 
+          isTimerRunning={isTimerRunning} 
+          stop={stop}
+          />
       </div> 
       <Display 
         activeSession={activeSession}
